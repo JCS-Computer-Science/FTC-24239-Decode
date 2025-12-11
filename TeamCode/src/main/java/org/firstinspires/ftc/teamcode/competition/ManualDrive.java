@@ -56,16 +56,16 @@ public class ManualDrive extends LinearOpMode{
         DcMotorSimple backLeftDrive = hardwareMap.get(DcMotorSimple.class, "backL");
         DcMotorEx frontRightDrive = hardwareMap.get(DcMotorEx.class, "frontR");
         DcMotorEx backRightDrive = hardwareMap.get(DcMotorEx.class, "backR");
-        DcMotorEx shooter = hardwareMap.get(DcMotorEx.class, "shooter");
-        Servo intake = hardwareMap.get(Servo.class, "intake");
+//        DcMotorEx shooter = hardwareMap.get(DcMotorEx.class, "shooter");
+//        Servo intake = hardwareMap.get(Servo.class, "intake");
 
         //directions of wheels, may need to change directions to drive properly
-        frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+        frontLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         backLeftDrive.setDirection(DcMotor.Direction.FORWARD);
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
         backRightDrive.setDirection(DcMotor.Direction.FORWARD);
         //direction of shooter
-        shooter.setDirection(DcMotor.Direction.FORWARD);
+//        shooter.setDirection(DcMotor.Direction.FORWARD);
 
 
         telemetry.addData("Status", "Initialized");
@@ -102,9 +102,9 @@ public class ManualDrive extends LinearOpMode{
 //            }
 
             //drive and turning calculations
-            double frontLeftPower  = axial + lateral + yaw;
-            double frontRightPower = axial - lateral - yaw;
-            double backLeftPower   = axial - lateral + yaw;
+            double frontLeftPower  = -axial - lateral - yaw;
+            double frontRightPower = -axial + lateral + yaw;
+            double backLeftPower   = -axial + lateral - yaw;
             double backRightPower  = axial + lateral - yaw;
 
             max = Math.max(Math.abs(frontLeftPower), Math.abs(frontRightPower));
@@ -119,10 +119,10 @@ public class ManualDrive extends LinearOpMode{
             }
 
 
-//            frontLeftPower = gamepad1.a ? 1.0 : 0.0;
-//            backLeftPower = gamepad1.b ? 1.0 : 0.0;
-//            frontRightPower = gamepad1.x ? 1.0 : 0.0;
-//            backRightPower = gamepad1.y ? 1.0 : 0.0;
+//            frontLeftPower = gamepad1.a ? -1.0 : 0.0;
+//            backLeftPower = gamepad1.a ? -1.0 : 0.0;
+//            frontRightPower = gamepad1.a ? -1.0 : 0.0;
+//            backRightPower = gamepad1.a ? 1.0 : 0.0;
 
             frontLeftDrive.setPower(frontLeftPower);
             frontRightDrive.setPower(frontRightPower);
@@ -174,21 +174,21 @@ public class ManualDrive extends LinearOpMode{
                 telemetry.addData("Shooter power:", "%4.2f", speeds[speedIndex]);
 //                lastPosition = shooterEnc.getDeltaPosition();
 
-                shooter.setPower(speeds[speedIndex]);
+//                shooter.setPower(speeds[speedIndex]);
             } else {
-                shooter.setPower(0.0);
+//                shooter.setPower(0.0);
 //                shooterEnc.setDirection(0.0);
             }
 
 
             //intake controls
-            if (gamepad1.left_bumper){
-                intake.setPosition(1.0);
-            }else if (gamepad1.right_bumper){
-                intake.setPosition(0.0);
-            }else{
-                intake.setPosition(0.5);
-            }
+//            if (gamepad1.left_bumper){
+//                intake.setPosition(1.0);
+//            }else if (gamepad1.right_bumper){
+//                intake.setPosition(0.0);
+//            }else{
+//                intake.setPosition(0.5);
+//            }
 
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", frontLeftPower, frontRightPower);
