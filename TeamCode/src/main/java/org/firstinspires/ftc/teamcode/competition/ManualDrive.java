@@ -56,6 +56,7 @@ public class ManualDrive extends LinearOpMode{
         DcMotorSimple backLeftDrive = hardwareMap.get(DcMotorSimple.class, "backL");
         DcMotorEx frontRightDrive = hardwareMap.get(DcMotorEx.class, "frontR");
         DcMotorEx backRightDrive = hardwareMap.get(DcMotorEx.class, "backR");
+        Servo intake = hardwareMap.get(Servo.class, "intake");
 //        DcMotorEx shooter = hardwareMap.get(DcMotorEx.class, "shooter");
 //        Servo intake = hardwareMap.get(Servo.class, "intake");
 
@@ -161,24 +162,32 @@ public class ManualDrive extends LinearOpMode{
                 justChangedSpeed = false;
             }
 
-            if (gamepad1.right_trigger > 0.5){
-                shooterEnabled = true;
-//                shooterPower = 1;
-//                shooter.setPower(shooterPower);
-            }
-            if (gamepad1.left_trigger > 0.5){
-                shooterEnabled = false;
-            }
-            if (shooterEnabled) {
-//                double velocity = shooterEnc.getDeltaPosition() - lastPosition;
-                telemetry.addData("Shooter power:", "%4.2f", speeds[speedIndex]);
-//                lastPosition = shooterEnc.getDeltaPosition();
-
-//                shooter.setPower(speeds[speedIndex]);
+            if (gamepad1.left_trigger > 0.5) {
+                intake.setPosition(0.0);
+            } else if (gamepad1.right_trigger > 0.5) {
+                intake.setPosition(1.0);
             } else {
-//                shooter.setPower(0.0);
-//                shooterEnc.setDirection(0.0);
+                intake.setPosition(0.5);
             }
+
+//            if (gamepad1.right_trigger > 0.5){
+//                shooterEnabled = true;
+////                shooterPower = 1;
+////                shooter.setPower(shooterPower);
+//            }
+//            if (gamepad1.left_trigger > 0.5){
+//                shooterEnabled = false;
+//            }
+//            if (shooterEnabled) {
+////                double velocity = shooterEnc.getDeltaPosition() - lastPosition;
+//                telemetry.addData("Shooter power:", "%4.2f", speeds[speedIndex]);
+////                lastPosition = shooterEnc.getDeltaPosition();
+//
+////                shooter.setPower(speeds[speedIndex]);
+//            } else {
+////                shooter.setPower(0.0);
+////                shooterEnc.setDirection(0.0);
+//            }
 
 
             //intake controls
